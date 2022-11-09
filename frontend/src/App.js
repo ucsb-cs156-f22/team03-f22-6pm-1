@@ -8,6 +8,11 @@ import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
 import TodosEditPage from "main/pages/Todos/TodosEditPage";
 
 import RecommendationIndexPage from "main/pages/Recommendation/RecommendationIndexPage";
+import MenuItemIndexPage from "main/pages/MenuItem/MenuItemIndexPage";
+import OrganizationIndexPage from "main/pages/Organization/OrganizationIndexPage";
+import ReviewIndexPage from "main/pages/Review/ReviewIndexPage";
+import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
+import ArticleIndexPage from "main/pages/Article/ArticleIndexPage";
 
 import DiningCommonsIndexPage from "main/pages/DiningCommons/DiningCommonsIndexPage";
 import DiningCommonsCreatePage from "main/pages/DiningCommons/DiningCommonsCreatePage";
@@ -40,6 +45,41 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/recommendation/list" element={<RecommendationIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/menuItem/list" element={<MenuItemIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/organization/list" element={<OrganizationIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/review/list" element={<ReviewIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/helpRequest/list" element={<HelpRequestIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/article/list" element={<ArticleIndexPage />} />
             </>
           )
         }
