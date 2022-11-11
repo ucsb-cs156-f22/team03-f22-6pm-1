@@ -1,13 +1,13 @@
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useBackendMutation } from "main/utils/useBackend";
 import { onDeleteSuccess } from "main/utils/UCSBDateUtils"
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
 
 export function cellToAxiosParamsDelete(cell) {
     return {
-        url: "/api/ucsbdates",
+        url: "/api/Recommendation",
         method: "DELETE",
         params: {
             id: cell.row.values.id
@@ -18,17 +18,17 @@ export function cellToAxiosParamsDelete(cell) {
 
 export default function RecommendationTable({ recommendation, currentUser }) {
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    //const editCallback = (cell) => {
-    //    navigate(`/ucsbdates/edit/${cell.row.values.id}`)
-    //}
+    const editCallback = (cell) => {
+       navigate(`/recommendation/edit/${cell.row.values.id}`)
+    }
 
     // Stryker disable all : hard to test for query caching
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/ucsbdates/all"]
+        ["/api/Recommendation/all"]
     );
     // Stryker enable all 
 
@@ -44,36 +44,42 @@ export default function RecommendationTable({ recommendation, currentUser }) {
 
     const columns = [
         {
-            Header: 'Requester Email',
+            Header: 'id',
+            accessor: 'id', // accessor is the "key" in the data
+        },
+        {
+            Header: 'requesterEmail',
             accessor: 'requesterEmail', // accessor is the "key" in the data
         },
         {
-            Header: 'Professor Email',
+            Header: 'professorEmail',
             accessor: 'professorEmail',
         },
         {
-            Header: 'Explanation',
+            Header: 'explanation',
             accessor: 'explanation',
         },
         {
-            Header: 'Date Requested',
+            Header: 'dateRequested',
             accessor: 'dateRequested',
         },
         {
-            Header: 'Date Needed',
+            Header: 'dateNeeded',
             accessor: 'dateNeeded',
         },
         {
-            Header: 'Done',
-            accessor: 'done',
+            Header: 'done',
             accessor: (row, _rowIndex) => String(row.done)
         }
     ];
 
+    const testid = "RecommendationTable";
+
     const columnsIfAdmin = [
         ...columns,
         // ButtonColumn("Edit", "primary", editCallback, "UCSBDatesTable"),
-        ButtonColumn("Delete", "danger", deleteCallback, "UCSBDatesTable", "id")
+        ButtonColumn("Edit", "primary", editCallback, "RecommendationTable"),
+        ButtonColumn("Delete", "danger", deleteCallback, "RecommendationTable")
     ];
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
@@ -81,6 +87,6 @@ export default function RecommendationTable({ recommendation, currentUser }) {
     return <OurTable
         data={recommendation}
         columns={columnsToDisplay}
-        testid={"RecommendationTable"}
+        testid={testid}
     />;
 };

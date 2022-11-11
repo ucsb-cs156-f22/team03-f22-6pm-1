@@ -8,6 +8,8 @@ import TodosCreatePage from "main/pages/Todos/TodosCreatePage";
 import TodosEditPage from "main/pages/Todos/TodosEditPage";
 
 import RecommendationIndexPage from "main/pages/Recommendation/RecommendationIndexPage";
+import RecommendationCreatePage from "main/pages/Recommendation/RecommendationCreatePage";
+import RecommendationEditPage from "main/pages/Recommendation/RecommendationEditPage";
 
 import DiningCommonsIndexPage from "main/pages/DiningCommons/DiningCommonsIndexPage";
 import DiningCommonsCreatePage from "main/pages/DiningCommons/DiningCommonsCreatePage";
@@ -39,6 +41,8 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/recommendation/list" element={<RecommendationIndexPage />} />
+              <Route exact path="/recommendation/create" element={<RecommendationCreatePage />} />
+              <Route exact path="/recommendation/edit/:id" element={<RecommendationEditPage />} />
             </>
           )
         }
