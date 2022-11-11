@@ -6,7 +6,7 @@ import { hasRole } from "main/utils/currentUser";
 
 export function cellToAxiosParamsDelete(cell) {
     return {
-        url: "/api/ucsbmenuitem",
+        url: "/api/ucsbdiningcommonsmenuitem",
         method: "DELETE",
         params: {
             code: cell.row.values.code
@@ -14,19 +14,19 @@ export function cellToAxiosParamsDelete(cell) {
     }
 }
 
-export default function MenuItemsTable({ diningCommons, currentUser }) {
+export default function MenuItemsTable({ menuItem, currentUser }) {
 
     const navigate = useNavigate();
 
     const editCallback = (cell) => {
-        navigate(`/diningCommons/edit/${cell.row.values.code}`)
+        navigate(`/ucsbdiningcommonsmenuitem/edit/${cell.row.values.code}`)
     }
 
     // Stryker disable all : hard to test for query caching
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/ucsbdiningcommons/all"]
+        ["/api/ucsbdiningcommonsmenuitem/all"]
     );
     // Stryker enable all 
 
@@ -35,8 +35,8 @@ export default function MenuItemsTable({ diningCommons, currentUser }) {
 
     const columns = [
         {
-            Header: 'Code',
-            accessor: 'code', 
+            Header: 'DiningCommonsCode',
+            accessor: 'diningCommonsCode', 
         },
         {
             Header: 'Name',
@@ -58,17 +58,9 @@ export default function MenuItemsTable({ diningCommons, currentUser }) {
             id: 'hasDiningCam', // needed for tests
             accessor: (row, _rowIndex) => String(row.hasDiningCam) // hack needed for boolean values to show up
         },
-        {
-            Header: 'Latitude',
-            accessor: 'latitude',
-        },
-        {
-            Header: 'Longitude',
-            accessor: 'longitude',
-        }
     ];
 
-    const testid = "DiningCommonsTable";
+    const testid = "MenuItemTable";
 
     const columnsIfAdmin = [
         ...columns,
