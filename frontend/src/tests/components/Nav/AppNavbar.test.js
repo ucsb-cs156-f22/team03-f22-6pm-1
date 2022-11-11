@@ -237,6 +237,7 @@ describe("AppNavbar tests", () => {
 
     });
 
+
     test("renders the articles menu correctly for an admin", async () => {
 
         const currentUser = currentUserFixtures.adminUser;
@@ -432,6 +433,7 @@ describe("AppNavbar tests", () => {
 
     });
 
+
     test("renders the help request menu correctly for an admin", async () => {
 
         const currentUser = currentUserFixtures.adminUser;
@@ -454,6 +456,7 @@ describe("AppNavbar tests", () => {
         aElement?.click();
         await waitFor( () => expect(getByTestId(/appnavbar-help-request-list/)).toBeInTheDocument() );
       });
+
 
       test("renders the help request menu correctly for a user", async () => {
 
@@ -528,6 +531,7 @@ describe("AppNavbar tests", () => {
     });
 
     
+
    
 });
 
