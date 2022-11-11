@@ -16,6 +16,7 @@ import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
+import MenuItemsIndexPage from "main/pages/MenuItems/MenuItemsIndexPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -47,6 +48,13 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/diningCommons/list" element={<DiningCommonsIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/menuitem/list" element={<MenuItemsIndexPage />} />
             </>
           )
         }
