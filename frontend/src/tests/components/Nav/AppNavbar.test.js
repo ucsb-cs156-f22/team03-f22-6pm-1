@@ -452,7 +452,7 @@ describe("AppNavbar tests", () => {
         const aElement = dropdown.querySelector("a");
         expect(aElement).toBeInTheDocument();
         aElement?.click();
-        await waitFor( () => expect(getByTestId(/appnavbar-help-request-list/)).toBeInTheDocument() );
+        await waitFor( () => expect(getByTestId("appnavbar-help-request-list")).toBeInTheDocument() );
       });
 
       test("renders the help request menu correctly for a user", async () => {
