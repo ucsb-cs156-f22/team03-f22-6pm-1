@@ -470,12 +470,12 @@ describe("AppNavbar tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => expect(getByTestId("appnavbar-help-request-dropdown")).toBeInTheDocument());
-        const dropdown = getByTestId("appnavbar-help-request-dropdown");
+        await waitFor(() => expect(getByTestId("appnavbar-helprequest-dropdown")).toBeInTheDocument());
+        const dropdown = getByTestId("appnavbar-helprequest-dropdown");
         const aElement = dropdown.querySelector("a");
         expect(aElement).toBeInTheDocument();
         aElement?.click();
-        await waitFor( () => expect(getByTestId("appnavbar-help-request-list")).toBeInTheDocument() );
+        await waitFor( () => expect(getByTestId("appnavbar-helprequest-list")).toBeInTheDocument() );
 
     });
 
