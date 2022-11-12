@@ -56,6 +56,24 @@ describe("RecommendationForm tests", () => {
         expect(getByText(/dateRequested is required./)).toBeInTheDocument();
     });
 
+    test("Correct Error messsages on bad input", async () => {
+
+        const { getByTestId, getByText } = render(
+            <Router  >
+                <RecommendationForm />
+            </Router>
+        );
+        await waitFor(() => expect(getByTestId("RecommendationForm-submit")).toBeInTheDocument());
+        const dateNeededField = getByTestId("RecommendationForm-dateNeeded");
+        const submitButton = getByTestId("RecommendationForm-submit");
+
+        fireEvent.change(dateNeededField, { target: { value: 'bad-input' } });
+        fireEvent.click(submitButton);
+
+        await waitFor(() => expect(getByText(/dateNeeded is required./)).toBeInTheDocument());
+        expect(getByText(/dateNeeded is required./)).toBeInTheDocument();
+    });
+
     test("Correct Error messsages on missing input", async () => {
 
         const { getByTestId, getByText } = render(

@@ -50,63 +50,68 @@ describe("RecommendationCreatePage tests", () => {
         );
     });
 
-    // test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
+    test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
-    //     const queryClient = new QueryClient();
-    //     const recommendation = {
-    //         id: 17,
-    //         "requesterEmail": "test@email.com",
-    //         "professorEmail": "prof@email.com",
-    //         "explanation": "explain",
-    //         "dateRequested": "2022-02-02T00:00",
-    //         "dateNeeded": "2022-02-02T00:00",
-    //         "done": true
-    //     };
+        const queryClient = new QueryClient();
+        const recommendation = {
+            id: 1,
+            "requesterEmail": "test@email.com",
+            "professorEmail": "prof@email.com",
+            "explanation": "explain",
+            "dateRequested": "2020-10-10T00:00",
+            "dateNeeded": "2020-10-10T00:00",
+            "done": "false"
+        };
 
-    //     axiosMock.onPost("/api/recommendation/post").reply( 202, recommendation );
+        axiosMock.onPost("/api/Recommendation/post").reply( 202, recommendation );
 
-    //     const { getByTestId } = render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <RecommendationCreatePage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RecommendationCreatePage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     await waitFor(() => {
-    //         expect(getByTestId("RecommendationForm-requesterEmail")).toBeInTheDocument();
-    //     });
+        await waitFor(() => {
+            expect(getByTestId("RecommendationForm-requesterEmail")).toBeInTheDocument();
+        });
 
-    //     const requesterEmailField = getByTestId("RecommendationForm-requesterEmail");
-    //     const professorEmailField = getByTestId("RecommendationForm-professorEmail");
-    //     const explanationField = getByTestId("RecommendationForm-explanation");
-    //     const doneField = getByTestId("RecommendationForm-done");
-    //     const submitButton = getByTestId("RecommendationForm-submit");
+        const requesterEmailField = getByTestId("RecommendationForm-requesterEmail");
+        const professorEmailField = getByTestId("RecommendationForm-professorEmail");
+        const dateRequestedField = getByTestId("RecommendationForm-dateRequested");
+        const dateNeededField = getByTestId("RecommendationForm-dateNeeded");
+        const explanationField = getByTestId("RecommendationForm-explanation");
+        const doneField = getByTestId("RecommendationForm-done");
 
-    //     fireEvent.change(requesterEmailField, { target: { value: 'test@email.com' } });
-    //     fireEvent.change(professorEmailField, { target: { value: 'prof@email.com' } });
-    //     fireEvent.change(explanationField, { target: { value: 'explain' } });
-    //     fireEvent.change(doneField, { target: { value: 'true' } });
+        const submitButton = getByTestId("RecommendationForm-submit");
 
-    //     expect(submitButton).toBeInTheDocument();
+        fireEvent.change(requesterEmailField, { target: { value: 'test@email.com' } });
+        fireEvent.change(professorEmailField, { target: { value: 'prof@email.com' } });
+        fireEvent.change(dateRequestedField, { target: { value: '2020-10-10T00:00' } });
+        fireEvent.change(dateNeededField, { target: { value: '2020-10-10T00:00' } });
+        fireEvent.change(explanationField, { target: { value: 'explain' } });
+        fireEvent.change(doneField, { target: { value: 'true' } });
 
-    //     fireEvent.click(submitButton);
+        expect(submitButton).toBeInTheDocument();
 
-    //     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
+        fireEvent.click(submitButton);
 
-    //     expect(axiosMock.history.post[0].params).toEqual(
-    //         {
-    //             "dateNeeded": "2022-02-02T00:00",
-    //             "dateRequested": "2022-02-02T00:00",
-    //             "done": true,
-    //             "explanation": "explain",
-    //             "professorEmail": "prof@email.com",
-    //             "requesterEmail": "test@email.com",
-    //     });
+        await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
-    //     expect(mockToast).toBeCalledWith("New recommendation Created - id: 17 requesterEmail test@email.com");
-    //     expect(mockNavigate).toBeCalledWith({ "to": "/recommendation/list" });
-    // });
+        expect(axiosMock.history.post[0].params).toEqual(
+            {
+                "requesterEmail": "test@email.com",
+                "professorEmail": "prof@email.com",
+                "explanation": "explain",
+                "dateRequested": "2020-10-10T00:00",
+                "dateNeeded": "2020-10-10T00:00",
+                "done": "true"
+        });
+
+        expect(mockToast).toBeCalledWith("New recommendation Created - id: 1 requesterEmail: test@email.com");
+        expect(mockNavigate).toBeCalledWith({ "to": "/recommendation/list" });
+    });
 
 
 });

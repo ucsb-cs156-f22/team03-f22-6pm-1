@@ -2,7 +2,6 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-const isodate_regex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 
 function RecommendationForm({ initialRecommendation, submitAction, buttonLabel = "Create" }) {
 
@@ -17,6 +16,9 @@ function RecommendationForm({ initialRecommendation, submitAction, buttonLabel =
     // Stryker enable all
 
     const navigate = useNavigate();
+
+    const isodate_regex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+    
     return (
 
         <Form onSubmit={handleSubmit(submitAction)}>
