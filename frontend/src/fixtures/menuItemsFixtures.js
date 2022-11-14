@@ -23,4 +23,4 @@ const menuItemFixtures = {
     ]
 }
 
-export { menuItemFixtures };
+export { menuItemsFixtures };
