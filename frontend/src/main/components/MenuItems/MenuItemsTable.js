@@ -39,6 +39,10 @@ export default function MenuItemsTable({ menuItems, currentUser }) {
             accessor: 'id',
         },
         {
+            Header: 'DiningCommonsCode',
+            accessor: 'diningCommonsCode',
+        },
+        {
             Header: 'Name',
             accessor: 'name',
         },
