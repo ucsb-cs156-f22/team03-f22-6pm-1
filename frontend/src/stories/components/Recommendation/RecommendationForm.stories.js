@@ -18,14 +18,14 @@ const Template = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-    submitText: "Create",
-    submitAction: () => { console.log("Submit was clicked"); }
+    buttonLabel: "Create",
+    submitAction: (data) => { console.log('Create was clicked, parameter t0 submitAction=',data); }
 };
 
 export const Show = Template.bind({});
 
 Show.args = {
     recommendation: recommendationFixtures.oneDate,
-    submitText: "",
-    submitAction: () => { }
+    buttonLabel: "Update",
+    submitAction: (data) => { console.log('Update was clicked, parameter to submitAction=',data)}
 };
