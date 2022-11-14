@@ -57,7 +57,7 @@ export default function MenuItemsTable({ menuItems, currentUser }) {
     const columnsIfAdmin = [
         ...columns,
         ButtonColumn("Edit", "primary", editCallback, testid),
-        ButtonColumn("Edit", "primary", editCallback, testid)
+        ButtonColumn("Delete", "danger", deleteCallback, testid)
     ];
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;

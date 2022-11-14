@@ -1,4 +1,4 @@
-const menuItemFixtures = {
+const menuItemsFixtures = {
     oneMenuItem : {
         "id" : 1,
         "diningCommonsCode": "carrillo",
