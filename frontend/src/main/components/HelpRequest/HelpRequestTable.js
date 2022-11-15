@@ -5,7 +5,7 @@ export default function HelpRequestTable({ helpRequests, currentUser }) {
 
     const columns = [
         {
-            Header: 'id',
+            Header: 'Id',
             accessor: 'id', // accessor is the "key" in the data
         },
         {
@@ -17,7 +17,7 @@ export default function HelpRequestTable({ helpRequests, currentUser }) {
             accessor: 'teamId',
         },
         {
-            Header: 'Table Or BreakoutRoom',
+            Header: 'Table Or Breakout Room',
             accessor: 'tableOrBreakoutRoom',
         },
         {
@@ -35,11 +35,19 @@ export default function HelpRequestTable({ helpRequests, currentUser }) {
         }
     ];
 
+    const testid = "HelpRequestTable";
+
+    const columnsIfAdmin = [
+        ...columns,
+        // ButtonColumn("Edit", "primary", editCallback, "UCSBDatesTable"),
+        // ButtonColumn("Delete", "danger", deleteCallback, "HelpRequestTable")
+    ];
+
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
 
     return <OurTable
         data={helpRequests}
         columns={columnsToDisplay}
-        testid={"HelpRequestTable"}
+        testid={testid}
     />;
 };

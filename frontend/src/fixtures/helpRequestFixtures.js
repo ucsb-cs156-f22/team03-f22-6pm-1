@@ -6,7 +6,7 @@ const helpRequestFixtures = {
         "tableOrBreakoutRoom": "table",
         "requestTime": "2000-01-01T00:00:00",
         "explanation": "yo",
-        "solved": false
+        "solved": true
     },
     threeHelpRequests: [
         {
@@ -25,7 +25,7 @@ const helpRequestFixtures = {
             "tableOrBreakoutRoom": "table",
             "requestTime": "2000-01-01T00:00:00",
             "explanation": "no",
-            "solved": false
+            "solved": true
         },
         {
             "id": 3,
@@ -35,7 +35,7 @@ const helpRequestFixtures = {
             "requestTime": "2000-01-01T00:00:00",
             "explanation": "thanks",
             "solved": false
-        } 
+        }
     ]
 };
 
