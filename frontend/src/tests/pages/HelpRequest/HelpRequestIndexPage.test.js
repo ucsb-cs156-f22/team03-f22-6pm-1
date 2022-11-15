@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
@@ -6,6 +6,7 @@ import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import { helpRequestFixtures } from "fixtures/helpRequestFixtures"; //TODO
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import _mockConsole from "jest-mock-console";
@@ -25,6 +26,8 @@ describe("HelpRequestIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
+    const testId = "HelpRequestTable";
+
     const setupUserOnly = () => {
         axiosMock.reset();
         axiosMock.resetHistory();
@@ -42,7 +45,7 @@ describe("HelpRequestIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/helprequest/all").reply(200, []);
+        axiosMock.onGet("/api/help-request/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -69,6 +72,70 @@ describe("HelpRequestIndexPage tests", () => {
         );
 
 
+    });
+
+    test("renders three help requests without crashing for regular user", async () => {
+        setupUserOnly();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/help-request/all").reply(200, helpRequestFixtures.threeHelpRequests);
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <HelpRequestIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(  () => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); } );
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+
+    });
+
+    test("renders three helprequests without crashing for admin user", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/help-request/all").reply(200, helpRequestFixtures.threeHelpRequests);
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <HelpRequestIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(  () => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); } );
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+
+    });
+
+    test("renders empty table when backend unavailable, user only", async () => {
+        setupUserOnly();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/help-request/all").timeout();
+
+        const { queryByTestId, getByText } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <HelpRequestIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3); });
+
+        const expectedHeaders = ['id','Requester Email', 'Team Id','Table Or BreakoutRoom','Request Time','Explanation','Solved'];
+    
+        expectedHeaders.forEach((headerText) => {
+          const header = getByText(headerText);
+          expect(header).toBeInTheDocument();
+        });
+
+        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
 });
