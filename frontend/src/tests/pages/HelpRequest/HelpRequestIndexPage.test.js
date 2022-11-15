@@ -1,4 +1,4 @@
-import { render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
@@ -6,7 +6,6 @@ import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { helpRequestFixtures } from "fixtures/helpRequestFixtures"; //TODO
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import _mockConsole from "jest-mock-console";
