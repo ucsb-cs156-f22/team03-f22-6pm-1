@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { menuItemsFixtures } from "fixtures/menuItemsFixtures";
 import MenuItemsTable from "main/components/MenuItems/MenuItemsTable";
 import { QueryClient, QueryClientProvider } from "react-query";
