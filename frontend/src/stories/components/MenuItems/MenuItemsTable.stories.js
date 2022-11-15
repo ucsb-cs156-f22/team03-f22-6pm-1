@@ -1,9 +1,8 @@
 import React from 'react';
 
 import MenuItemsTable from "main/components/MenuItems/MenuItemsTable";
-import { MenuItemsFixtures } from "fixtures/menuItemsFixtures";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
-import { menuItemsFixtures } from '../../../fixtures/menuItemsFixtures';
+import { menuItemsFixtures } from 'fixtures/menuItemsFixtures';
 
 export default {
     title: 'components/MenuItems/MenuItemsTable',
@@ -25,7 +24,7 @@ Empty.args = {
 export const ThreeMenuItems = Template.bind({});
 
 ThreeMenuItems.args = {
-    menuItems: MenuItemsFixtures.threeMenuItems
+    menuItems: menuItemsFixtures.threeMenuItems
 };
 
 export const ThreeMenuItemsAsAdmin = Template.bind({});
