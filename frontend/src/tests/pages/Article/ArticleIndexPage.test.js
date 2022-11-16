@@ -120,7 +120,7 @@ describe("ArticleIndexPage tests", () => {
 
         const restoreConsole = mockConsole();
 
-        const { queryByTestId } = render(
+        const { queryByTestId, getByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <ArticleIndexPage />
@@ -131,6 +131,13 @@ describe("ArticleIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
         restoreConsole();
 
+        const expectedHeaders = ['Date Added',  'Email', 'Explanation','ID','Title','URL'];
+    
+        expectedHeaders.forEach((headerText) => {
+          const header = getByText(headerText);
+          expect(header).toBeInTheDocument();
+        });
+
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
@@ -139,7 +146,7 @@ describe("ArticleIndexPage tests", () => {
 
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/article/all").reply(200, articleFixtures.threeArticle);
-        axiosMock.onDelete("/api/article").reply(200, "Article with id 1 was deleted");
+        axiosMock.onDelete("/api/article", {params: {id: 1}}).reply(200, "Article with id 1 was deleted");
 
 
         const { getByTestId } = render(

@@ -67,7 +67,7 @@ export default function ArticleTable({ article, currentUser }) {
     const columnsIfAdmin = [
         ...columns,
        // ButtonColumn("Edit", "primary", editCallback, testid),
-        ButtonColumn("Delete", "danger", deleteCallback, testid)
+        ButtonColumn("Delete", "danger", deleteCallback, "ArticleTable")
     ];
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
