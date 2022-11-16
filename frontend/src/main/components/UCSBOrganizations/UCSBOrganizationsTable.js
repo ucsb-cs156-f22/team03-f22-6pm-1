@@ -22,15 +22,15 @@ export default function UCSBOrganizationsTable({ ucsbOrganizations, currentUser 
     //     navigate(`/diningCommons/edit/${cell.row.values.code}`)
     // }
 
-    // // Stryker disable all : hard to test for query caching
+    // Stryker disable all : hard to test for query caching
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
         ["/api/UCSBOrganizations/all"]
     );
-    // // Stryker enable all 
+    // Stryker enable all 
 
-    // // Stryker disable next-line all : TODO try to make a good test for this
+    // Stryker disable next-line all : TODO try to make a good test for this
     const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
 
     const columns = [
