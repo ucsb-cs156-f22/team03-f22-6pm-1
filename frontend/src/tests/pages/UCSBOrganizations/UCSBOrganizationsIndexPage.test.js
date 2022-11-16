@@ -131,6 +131,13 @@ describe("UCSBOrganizationsIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
         restoreConsole();
 
+        const expectedHeaders = ['Org Code',  'Org Translation', 'Org Translation (Short)','Inactive?'];
+    
+        expectedHeaders.forEach((headerText) => {
+          const header = getByText(headerText);
+          expect(header).toBeInTheDocument();
+        });
+
         expect(queryByTestId(`${testId}-cell-row-0-col-orgCode`)).not.toBeInTheDocument();
     });
 
@@ -139,7 +146,7 @@ describe("UCSBOrganizationsIndexPage tests", () => {
 
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/UCSBOrganizations/all").reply(200, ucsbOrganizationsFixtures.threeOrgs);
-        axiosMock.onDelete("/api/UCSBOrganizations").reply(200, "UCSBOrganization with orgCode TT was deleted");
+        axiosMock.onDelete("/api/UCSBOrganizations", {params: {orgCode: "TT"}}).reply(200, "UCSBOrganization with orgCode TT was deleted");
 
 
         const { getByTestId } = render(
