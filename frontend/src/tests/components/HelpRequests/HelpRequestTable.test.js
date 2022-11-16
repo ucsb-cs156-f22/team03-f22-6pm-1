@@ -24,7 +24,7 @@ describe("HelpRequestTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable helpRequests={[]} currentUser={currentUser} />
+          <HelpRequestTable requests={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -37,7 +37,7 @@ describe("HelpRequestTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable helpRequests={[]} currentUser={currentUser} />
+          <HelpRequestTable requests={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -50,7 +50,7 @@ describe("HelpRequestTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable helpRequests={[]} currentUser={currentUser} />
+          <HelpRequestTable requests={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -64,7 +64,7 @@ describe("HelpRequestTable tests", () => {
     const { getByText, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <HelpRequestTable helpRequests={helpRequestFixtures.threeHelpRequests} currentUser={currentUser} />
+          <HelpRequestTable requests={helpRequestFixtures.threeHelpRequests} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -92,9 +92,9 @@ describe("HelpRequestTable tests", () => {
     // expect(editButton).toBeInTheDocument();
     // expect(editButton).toHaveClass("btn-primary");
 
-    // const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    // expect(deleteButton).toBeInTheDocument();
-    // expect(deleteButton).toHaveClass("btn-danger");
+    const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+    expect(deleteButton).toHaveClass("btn-danger");
 
   });
 
