@@ -62,10 +62,12 @@ export default function ArticleTable({ article, currentUser }) {
         }
     ];
 
+    const testid = "ArticleTable"
+
     const columnsIfAdmin = [
         ...columns,
-       // ButtonColumn("Edit", "primary", editCallback, "ArticleTable"),
-        ButtonColumn("Delete", "danger", deleteCallback, "ArticleTable")
+       // ButtonColumn("Edit", "primary", editCallback, testid),
+        ButtonColumn("Delete", "danger", deleteCallback, testid)
     ];
 
     const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
@@ -75,6 +77,6 @@ export default function ArticleTable({ article, currentUser }) {
     return <OurTable
         data={article}
         columns={columnsToDisplay}
-        testid={"ArticleTable"}
+        testid={testid}
     />;
 };
