@@ -22,7 +22,7 @@ import ArticleIndexPage from "main/pages/Article/ArticleIndexPage";
 import RecommendationIndexPage from "main/pages/Recommendation/RecommendationIndexPage";
 import ReviewsIndexPage from "main/pages/Reviews/ReviewsIndexPage";
 import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
-
+import UCSBOrganizationsIndexPage from "main/pages/UCSBOrganizations/UCSBOrganizationsIndexPage"
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -90,6 +90,13 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/helprequest/list" element={<HelpRequestIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/ucsborganizations/list" element={<UCSBOrganizationsIndexPage />} />
             </>
           )
         }
