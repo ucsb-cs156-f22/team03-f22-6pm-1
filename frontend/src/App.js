@@ -16,7 +16,7 @@ import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
-import MenuItemsIndexPage from "main/pages/MenuItems/MenuItemsIndexPage;
+import MenuItemsIndexPage from "main/pages/MenuItems/MenuItemsIndexPage";
 import ArticleIndexPage from "main/pages/Article/ArticleIndexPage";
 import RecommendationIndexPage from "main/pages/Recommendation/RecommendationIndexPage";
 import ReviewsIndexPage from "main/pages/Reviews/ReviewsIndexPage";
