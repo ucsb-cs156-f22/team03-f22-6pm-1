@@ -120,7 +120,7 @@ describe("UCSBOrganizationsIndexPage tests", () => {
 
         const restoreConsole = mockConsole();
 
-        const { queryByTestId } = render(
+        const { queryByTestId, getByText  } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <UCSBOrganizationsIndexPage />
