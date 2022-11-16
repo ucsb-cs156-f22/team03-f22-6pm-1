@@ -1,12 +1,12 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
+import MenuItemsIndexPage from "main/pages/MenuItems/MenuItemsIndexPage";
 
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { helpRequestFixtures } from "fixtures/helpRequestFixtures"; //TODO
+import { menuItemsFixtures } from "fixtures/menuItemsFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import _mockConsole from "jest-mock-console";
@@ -22,11 +22,18 @@ jest.mock('react-toastify', () => {
     };
 });
 
-describe("HelpRequestIndexPage tests", () => {
+const mockedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedNavigate
+}));
+
+describe("MenuItemsIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    const testId = "HelpRequestTable";
+    const testId = "MenuItemsTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
@@ -45,12 +52,12 @@ describe("HelpRequestIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/help-request/all").reply(200, []);
+        axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <HelpRequestIndexPage />
+                    <MenuItemsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -61,12 +68,12 @@ describe("HelpRequestIndexPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/helprequest/all").reply(200, []);
+        axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <HelpRequestIndexPage />
+                    <MenuItemsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -74,15 +81,15 @@ describe("HelpRequestIndexPage tests", () => {
 
     });
 
-    test("renders three help requests without crashing for regular user", async () => {
+    test("renders three diningCommon without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/helprequest/all").reply(200, helpRequestFixtures.threeHelpRequests);
+        axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").reply(200, menuItemsFixtures.threeMenuItems);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <HelpRequestIndexPage />
+                    <MenuItemsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -93,20 +100,20 @@ describe("HelpRequestIndexPage tests", () => {
 
     });
 
-    test("renders three helprequests without crashing for admin user", async () => {
+    test("renders three diningCommons without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/helprequest/all").reply(200, helpRequestFixtures.threeHelpRequests);
+        axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").reply(200, menuItemsFixtures.threeMenuItems);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <HelpRequestIndexPage />
+                    <MenuItemsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(  () => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); } );
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
         expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
         expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
 
@@ -116,19 +123,19 @@ describe("HelpRequestIndexPage tests", () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/helprequest/all").timeout();
+        axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").timeout();
 
         const { queryByTestId, getByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <HelpRequestIndexPage />
+                    <MenuItemsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(3); });
 
-        const expectedHeaders = ['Id','Requester Email', 'Team Id','Table Or Breakout Room','Request Time','Explanation','Solved'];
+        const expectedHeaders = ['Id', 'DiningCommonsCode', 'Name', 'Station'];
     
         expectedHeaders.forEach((headerText) => {
           const header = getByText(headerText);
@@ -142,14 +149,14 @@ describe("HelpRequestIndexPage tests", () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/helprequest/all").reply(200, helpRequestFixtures.threeHelpRequests);
-        axiosMock.onDelete("/api/helprequest", {params: {id: 1}}).reply(200, "HelpRequest with id 1 was deleted");
+        axiosMock.onGet("/api/ucsbdiningcommonsmenuitem/all").reply(200, menuItemsFixtures.threeMenuItems);
+        axiosMock.onDelete("/api/ucsbdiningcommonsmenuitem", {params: {id: 1}}).reply(200, "MenuItem with id 1 was deleted");
 
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <HelpRequestIndexPage />
+                    <MenuItemsIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -164,8 +171,39 @@ describe("HelpRequestIndexPage tests", () => {
        
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("HelpRequest with id 1 was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("MenuItem with id 1 was deleted") });
 
     });
 
+    // test("test what happens when you click edit as an admin", async () => {
+    //     setupAdminUser();
+
+    //     const queryClient = new QueryClient();
+    //     axiosMock.onGet("/api/ucsbdiningcommons/all").reply(200, diningCommonsFixtures.threeCommons);
+
+    //     const { getByTestId } = render(
+    //         <QueryClientProvider client={queryClient}>
+    //             <MemoryRouter>
+    //                 <DiningCommonsIndexPage />
+    //             </MemoryRouter>
+    //         </QueryClientProvider>
+    //     );
+
+    //     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-code`)).toBeInTheDocument(); });
+
+    //     expect(getByTestId(`${testId}-cell-row-0-col-code`)).toHaveTextContent("de-la-guerra"); 
+
+
+    //     const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    //     expect(editButton).toBeInTheDocument();
+       
+    //     fireEvent.click(editButton);
+
+    //     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/diningCommons/edit/de-la-guerra'));
+
+    // });
+
+
 });
+
+

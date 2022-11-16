@@ -1,27 +1,27 @@
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import React from 'react'
 import { useBackend } from 'main/utils/useBackend'; // use prefix indicates a React Hook
-import HelpRequestTable from 'main/components/HelpRequest/HelpRequestTable';
-import { useCurrentUser } from 'main/utils/currentUser' // use prefix indicates a React Hook
 
-export default function HelpRequestIndexPage() {
-    
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import { useCurrentUser } from 'main/utils/currentUser' // use prefix indicates a React Hook
+import ReviewsTable from 'main/components/Reviews/ReviewsTable';
+
+export default function ReviewsIndexPage() {
   const currentUser = useCurrentUser();
 
-  const { data: requests, error: _error, status: _status } =
+  const { data: reviews, error: _error, status: _status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
-      ["/api/helprequest/all"],
+      ["/api/MenuItemReview/all"],
             // Stryker disable next-line StringLiteral,ObjectLiteral : since "GET" is default, "" is an equivalent mutation
-            { method: "GET", url: "/api/helprequest/all" },
+            { method: "GET", url: "/api/MenuItemReview/all" },
       []
     );
 
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Help Requests</h1>
-        <HelpRequestTable requests={requests} currentUser={currentUser} />
+        <h1>Reviews</h1>
+        <ReviewsTable reviews={reviews} currentUser={currentUser} />
       </div>
     </BasicLayout>
   )
